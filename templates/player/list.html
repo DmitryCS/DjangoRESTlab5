@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of players</title>
+</head>
+<body>
+    <h2 style="text-align:right;"><a href="/player/temp/">My profile</a></h2>
+    <h2 style="text-align:center;">List of players:<br>
+    {% if player_list %}
+        {% for a in player_list %}
+            <a href="{% url 'player:detail' a.id %}">{{ a.name }}</a> <br>
+        {% endfor %}
+    {% else %}
+        Игроки не найдены(
+    {% endif %}
+    </h2>
+</body>
+</html>

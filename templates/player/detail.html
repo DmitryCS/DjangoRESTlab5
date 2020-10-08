@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player</title>
+</head>
+<body>
+    <dev class="mainMenu">
+        <div class="menuEl"> <h2><a href="/player/temp/">My profile</a></h2> </div>
+        <div class="menuEl"> <h2><a href="/accounts/logout/">Logout</a></h2> </div>
+    </dev>
+    <div style="text-align:center;">
+        <dev class="menu">
+            <div class="menuEl"> <h1><a href="/player/">All users</a></h1> </div>
+            <div class="menuEl"> <h1><a href="/messages/">All messages</a></h1> </div>
+            <div class="menuEl"> <h1><a href="/inventory/rest/">Inventory</a></h1> </div>
+            <div class="menuEl"> <h1><a href="/location/rest/">Location</a></h1> </div>
+        </dev>
+        <h2>Username: <span class="notbold">{{ player.name }} </span></h2>
+        <h3>Player class: <span class="notbold">{{ player.playerclass }}</span></h3>
+        <h3>Email: <span class="notbold">{{ player.email }}</span></h3>
+        <h3>Level: <span class="notbold">{{ player.level }}</span></h3>
+        <h3>Position: <span class="notbold">{{ player.position }}</span></h3>
+        <h1><button type="button" onclick="myFunc()" id="formButton">Написать сообщение</button></h1>
+        <form id="form1">
+            <textarea id="textarea_message" name="message"></textarea><br>
+            <button type="button" onclick="Send()" id="send">Send</button>
+            <button type="button" onclick="Hide()" id="hide">Hide</button>
+        </form>
+    </div>
+
+<script>
+    isItMe();
+    function myFunc()
+    {
+        document.getElementById("form1").style.display = "block";
+    }
+    function Hide()
+    {
+        document.getElementById("form1").style.display = "none";
+    }
+    function isItMe() {
+        var xhr = new XMLHttpRequest();
+        var url = "/player/temp2/";
+        xhr.open("GET", url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(null);
+
+        xhr.onload = function () {
+            var data = JSON.parse(this.responseText);
+
+            var pageURL = window.location.href;
+            pageURL = pageURL.substring(0, pageURL.length - 1)
+            var lastURLSegment = pageURL.substr(pageURL.lastIndexOf('/') + 1);
+            if (data['player_id'].toString() === lastURLSegment)
+                document.getElementById("formButton").style.visibility = 'hidden';
+        }
+    }
+    function Send(){
+        var xhr2 = new XMLHttpRequest();
+        var url2 = "/player/temp2/";
+        xhr2.open("GET", url2, true);
+        xhr2.setRequestHeader('Content-Type', 'application/json');
+        xhr2.send(null);
+
+        xhr2.onload = function() {
+            var data = JSON.parse(this.responseText);
+            console.log(data);
+            alert(data);
+
+            var pageURL = window.location.href;
+            pageURL = pageURL.substring(0, pageURL.length - 1)
+            var lastURLSegment = pageURL.substr(pageURL.lastIndexOf('/') + 1);
+
+            var xhr = new XMLHttpRequest();
+            var url = "/messages/";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                playerFrom: data['player_id'],
+                playerTo: lastURLSegment,
+                messageText: document.getElementById("textarea_message").value
+             }));
+        };
+    }
+</script>
+
+    <script src="{% static "js/write_message.js" %}" type="text/javascript"></script>
+</body>
+<style>
+.mainMenu{
+    display: flex;
+    justify-content: flex-end;
+}
+.menu{
+    display: inline-flex;
+}
+.menuEl{
+    margin: 10px;
+    text-align: right;
+}
+textarea {
+  width: 200px;
+  height: 100px;
+}
+.notbold{
+    font-weight:normal
+}​,
+ form {
+  padding: 15px;
+  border: 1px solid #666;
+  background: #fff;
+  display: none;
+}
+
+#formButton {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+</style>
+</html>

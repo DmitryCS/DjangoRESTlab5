@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of locations</title>
+</head>
+<body>
+    {% if locations_list %}
+        {% for a in locations_list %}
+            <a href="{% url 'location:detail' a.id %}">{{ a.locationId }}</a>
+        {% endfor %}
+    {% else %}
+        Локации не найдены(
+    {% endif %}
+{#    блабла...#}
+</body>
+</html>
