@@ -1,4 +1,4 @@
-const uri = 'http://localhost:8000/messages/';
+const uri = 'http://localhost:8000/inventory/item/';
 let todos = [];
 
 function getItems() {
@@ -10,12 +10,14 @@ function getItems() {
 
 function addItem() {
   const addNameTextbox = document.getElementById('add-name');
+  const addNameTextbox2 = document.getElementById('add-name2');
+  const addNameTextbox3 = document.getElementById('add-name3');
 
   const item = {
     // isComplete: false,
-    // playerFrom:,
-    // playerTo:,
-    messageText:addNameTextbox.value.trim(),
+    itemType: addNameTextbox.value.trim(),
+    quality: addNameTextbox2.value.trim(),
+    owner: addNameTextbox3.value.trim(),
   };
    fetch(uri, {
     method: 'POST',
@@ -44,9 +46,10 @@ function deleteItem(id) {
 function displayEditForm(id) {
   const item = todos.find(item => item.id === id);
 
-  document.getElementById('edit-name').value = item.type;
+  document.getElementById('edit-name').value = item.itemType;
+  document.getElementById('edit-name2').value = item.quality;
+  document.getElementById('edit-name3').value = item.owner;
   document.getElementById('edit-id').value = item.id;
-  // document.getElementById('edit-isComplete').checked = item.isComplete;
   document.getElementById('editForm').style.display = 'block';
 }
 
@@ -54,8 +57,9 @@ function updateItem() {
   const itemId = document.getElementById('edit-id').value;
   const item = {
     id: parseInt(itemId, 10),
-    // isComplete: document.getElementById('edit-isComplete').checked,
-    type: document.getElementById('edit-name').value.trim()
+    itemType: document.getElementById('edit-name').value.trim(),
+    quality: document.getElementById('edit-name2').value.trim(),
+    owner: document.getElementById('edit-name3').value.trim()
   };
 
   fetch(`${uri}${itemId}/`, {
@@ -112,14 +116,39 @@ function _displayItems(data) {
     // td1.appendChild(isCompleteCheckbox);
 
     let td2 = tr.insertCell(0);
-    let textNode = document.createTextNode(item.messageText);
+    let textNode = document.createTextNode(item.itemType);
     td2.appendChild(textNode);
 
-    // let td3 = tr.insertCell(1);
-    // td3.appendChild(editButton);
+    let td3 = tr.insertCell(1);
+        // const item2 = {
+        //   'player_id': document.getElementById('add-name3').value.trim()
+        // };
+        // fetch('http://localhost:8000/player/temp3/', {
+        // method: 'POST',
+        // headers: {
+        //   'Accept': 'application/json',
+        //   'Content-Type': 'application/json'
+        // },
+        // body: JSON.stringify(item2)
+        // })
+        // .then(response => response.json())
+        // .then(() => {
+        //   let textNode2 = document.createTextNode(response.json().player_id);
+        //   td3.appendChild(textNode2);
+        // })
+        // .catch(error => console.error('Unable to add item.', error));
+    let textNode2 = document.createTextNode(item.quality);
+    td3.appendChild(textNode2);
 
-    // let td4 = tr.insertCell(2);
-    // td4.appendChild(deleteButton);
+    let td4 = tr.insertCell(2);
+    let textNode3 = document.createTextNode(item.owner);
+    td4.appendChild(textNode3);
+
+    let td5 = tr.insertCell(3);
+    td5.appendChild(editButton);
+
+    let td6 = tr.insertCell(4);
+    td6.appendChild(deleteButton);
   });
 
   todos = data;

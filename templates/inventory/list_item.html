@@ -12,18 +12,11 @@
         <div class="menuEl"> <h2><a href="/accounts/logout/">Logout</a></h2> </div>
     </dev>
     <h1>Create, read, update and delete</h1>
-    <h3>Table "Location"</h3>
+    <h3>Table "Item"</h3>
     <form action="javascript:void(0);"  method="POST" onsubmit="addItem()">
         <input type="text" id="add-name" placeholder="locationId">
         <input type="text" id="add-name2" placeholder="description">
-{#        <input type="text" id="add-name3" placeholder="locationType">#}
-        <select id="add-name3">
-            <option>Forest</option>
-            <option>Desert</option>
-            <option>Dungeon</option>
-            <option>River</option>
-            <option>Ocean</option>
-        </select>
+        <input type="text" id="add-name3" placeholder="locationType">
         <input type="submit" value="Add">
     </form>
 
@@ -33,14 +26,7 @@
             <input type="hidden" id="edit-id">
             <input type="text" id="edit-name">
             <input type="text" id="edit-name2">
-{#            <input type="text" id="edit-name3">#}
-            <select id="edit-name3">
-                <option>Forest</option>
-                <option>Desert</option>
-                <option>Dungeon</option>
-                <option>River</option>
-                <option>Ocean</option>
-            </select>
+            <input type="text" id="edit-name3">
             <input type="submit" value="Save">
             <a onclick="closeInput()" aria-label="Close">&#10006;</a>
         </form>
@@ -50,13 +36,13 @@
 
     <table>
         <tr>
-            <th>Location name</th>
-            <th>Description</th>
-            <th>Location type</th>
+            <th>Name</th>
+            <th></th>
+            <th></th>
         </tr>
         <tbody id="todos"></tbody>
     </table>
-    <script src="{% static "js/location.js" %}" type="text/javascript"></script>
+    <script src="{% static "js/item.js" %}" type="text/javascript"></script>
     <script>
         getItems();
         closeInput();

@@ -7,4 +7,5 @@ urlpatterns = [
     path('<int:player_id>/', views.player_detail, name='detail'),
     path('temp/', views.player_redirect, name='redirect'),
     path('temp2/', views.player_get_id, name='redirect'),
+    # path('temp3/', views.player_get_name_by_id, name='redirect')
 ]

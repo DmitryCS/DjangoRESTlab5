@@ -44,3 +44,15 @@ def player_get_id(request):
         'player_id': player_id
     }
     return HttpResponse(json.dumps(responseData), content_type='application/json')#HttpResponseRedirect('/player/%s/' % str(player_id))#render(request, "player/detail2.html", {'player': a})
+
+
+# @login_required
+# def player_get_name_by_id(request, player_id):
+#     try:
+#         player_name = Player.objects.get(id=player_id).name
+#     except:
+#         raise Http404("Игрок не найден")
+#     responseData = {
+#         'player_name': player_name
+#     }
+#     return HttpResponse(json.dumps(responseData), content_type='application/json')

@@ -1,4 +1,4 @@
-const uri = 'http://localhost:8000/inventory/';
+const uri = 'http://localhost:8000/inventory/itemtype/';
 let todos = [];
 
 function getItems() {

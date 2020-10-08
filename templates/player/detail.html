@@ -13,8 +13,9 @@
     <div style="text-align:center;">
         <dev class="menu">
             <div class="menuEl"> <h1><a href="/player/">All users</a></h1> </div>
-            <div class="menuEl"> <h1><a href="/messages/">All messages</a></h1> </div>
-            <div class="menuEl"> <h1><a href="/inventory/rest/">Inventory</a></h1> </div>
+            <div class="menuEl"> <h1><a href="/messages/rest/">All messages</a></h1> </div>
+            <div class="menuEl"> <h1><a href="/inventory/itemtype/rest/">Item types</a></h1> </div>
+            <div class="menuEl"> <h1><a href="/inventory/item/rest/">Items</a></h1> </div>
             <div class="menuEl"> <h1><a href="/location/rest/">Location</a></h1> </div>
         </dev>
         <h2>Username: <span class="notbold">{{ player.name }} </span></h2>
@@ -53,8 +54,8 @@
             var pageURL = window.location.href;
             pageURL = pageURL.substring(0, pageURL.length - 1)
             var lastURLSegment = pageURL.substr(pageURL.lastIndexOf('/') + 1);
-            if (data['player_id'].toString() === lastURLSegment)
-                document.getElementById("formButton").style.visibility = 'hidden';
+            if (data['player_id'].toString() !== lastURLSegment)
+                document.getElementById("formButton").style.visibility = 'visible'; //'hidden';
         }
     }
     function Send(){
@@ -67,7 +68,6 @@
         xhr2.onload = function() {
             var data = JSON.parse(this.responseText);
             console.log(data);
-            alert(data);
 
             var pageURL = window.location.href;
             pageURL = pageURL.substring(0, pageURL.length - 1)
@@ -82,6 +82,9 @@
                 playerTo: lastURLSegment,
                 messageText: document.getElementById("textarea_message").value
              }));
+            document.getElementById("textarea_message").value = '';
+            {#alert("Сообщение отправлено.");#}
+            Hide();
         };
     }
 </script>
@@ -115,7 +118,8 @@ textarea {
 }
 
 #formButton {
-  display: block;
+    visibility: hidden;
+  {#display: block;#}
   margin-right: auto;
   margin-left: auto;
 }

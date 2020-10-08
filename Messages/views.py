@@ -72,4 +72,4 @@ class JSONResponse(HttpResponse):
     @login_required
     @csrf_exempt
     def Messages_rest(request):
-        return render(request, 'messages/list2.html')
+        return render(request, 'messages/list.html')
